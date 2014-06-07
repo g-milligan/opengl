@@ -1,0 +1,10 @@
+﻿Build started 6/7/2014 6:14:28 PM.
+     1>Project "C:\OpenGL\tutorials\openGL1\openGL1\openGL1.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\OpenGL\tutorials\openGL1\Debug\openGL1.exe" /INCREMENTAL /NOLOGO /LIBPATH:.\lib glew32.lib glew32s.lib SDL2.lib SDL2main.lib SDL2test.lib OpenGL32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\OpenGL\tutorials\openGL1\Debug\openGL1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\OpenGL\tutorials\openGL1\Debug\openGL1.lib" /MACHINE:X86 Debug\main.obj
+         openGL1.vcxproj -> C:\OpenGL\tutorials\openGL1\Debug\openGL1.exe
+     1>Done Building Project "C:\OpenGL\tutorials\openGL1\openGL1\openGL1.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.94

@@ -1,0 +1,102 @@
+OpenGL Getting Started (Windows):
+
+	DOWNLOADS (Windows)
+	https://www.youtube.com/watch?v=DxNlRMboBuI&list=PLEETnX-uPtBXT9T-hD0Bj31DSnwio-ywh&index=3
+
+		You need the following software:
+		1) IDE or Compiler. For example, Visual Studio 2012 For Desktop. Visual Studio 2012 Update 4 (At the time of this writing)
+			http://www.visualstudio.com/downloads/download-visual-studio-vs 
+		-) Important libraries can all be found off of 
+			http://www.opengl.org/sdk/libs/
+		2) Download the GLEW Library (Windows 32-bit or 64-bit binary)
+			http://glew.sourceforge.net/ 
+		3) Download the GLM Library (OpenGL Mathematics)
+			http://sourceforge.net/projects/ogl-math/files/
+		4) Download for Simple Directmedia Layer. Get the Development Library download
+			http://www.libsdl.org/
+
+	SETUP (Windows)
+	https://www.youtube.com/watch?v=XAb6kbkKguk&list=PLEETnX-uPtBXT9T-hD0Bj31DSnwio-ywh&index=3
+	
+		1) Open Visual Studio and create a new project
+			Visual C++ >> Win32 Console Application >> Name it, eg: "openGL1"
+			>> Choose different location if you want >> "Create directory for solution" YES is checked
+			>> click OK
+		2) Welcome to the Win32 Application Wizard >> Next
+		3) NO to "precompiled header" >> NO to "Security Development Lifecycle (SDL) checks" 
+			>> YES to "Empty project" >> YES "Console application" >> click "finish"
+		4) In the empty project, you can delete the "Header Files" and "Resource Files" folders
+		5) Add "main.cpp" file to the "Source Files" Folder
+		6) write the code from the youtube tutorial OR copy the openGL1 project code
+		7) F7 will compile your code. CTL+F5 will run the code. Success! ... if your project runs.
+		8) Next, you will implement your libraries (that you downloaded in the DOWNLOADS section).
+			Libraries can be referenced anywhere, but it's convenient to bundle them WITH your project;
+			go ahead and create the following folders where main.cpp is located, under [project-source-root]:
+			"include"
+			"lib"
+		9) Extract your 3 libraries (GLEW, GLM, SDL)
+		10) Put your include files into the "include" folder:
+
+			[unzipped-SDL-Root]/include --> rename "include" --> 	[project-source-root]/include/SDL2
+			[unzipped-GLEW-Root]/include/GL 	-->		[project-source-root]/include/GL
+			[unzipped-GLM-Root]/glm/glm 		-->		[project-source-root]/include/glm
+
+			If the unzipped folder structure is a little different, just be sure to copy the folder,
+			THAT IS the direct parent of all the source files, eg: *.hpp, *.h, 
+
+		11) Put your lib files into the "lib" folder:
+
+			[unzipped-SDL-Root]/lib/[x86 OR x64]/[all-files]		-->	[project-source-root]/lib/.
+			[unzipped-GLEW-Root]/lib/Release/[x86 OR x64]/[all-files] 	-->	[project-source-root]/lib/.
+			[unzipped-GLM-Root]/[No Lib files]
+
+			For 32 bit systems, use "Win32" or "x86" version of the files...
+			For 64 bit systems, use "x64" version of the files
+			You can find out if you are using a 64 or 32 bit system by right clicking "Computer" and viewing properties
+
+		12) Put your .dll files in your project's Debug folder (where the .exe file is generated)
+
+			[unzipped-GLEW-Root]/bin/Release/[x86 OR x64]/glew32.dll	-->	[project-root]/Debug/.
+			[project-source-root]/lib/SDL2.dll				--> 	[project-root]/Debug/.
+
+			If your .dll files are not named exactly the same way, that's alright. Just make sure you get
+			the correct .dll files into the Debug folder
+
+		Now in future project, just make sure you copy over both "include", "lib", and two .dll files in "Debug"
+		to get your additional libs and includes correctly added
+
+		13) Now, link what you added to your project in Virtual Studio
+
+			Right click on project >> Properties >> C/C++ >> Additional Include Directories >> Edit
+			>> click add folder icon >> browse to the "include" folder 
+			>> edit the path so that it's relative, ".\include" >> click "Apply" and "Ok"
+
+		14) Make sure GLEW is working by adding it in your project code and hitting F7 to build
+			Note, when typing in the include, intellisense should pick it up
+
+			#include <GL/glew.h>
+
+		15) Add the "lib" directory, similar to the way you added the "include" directory
+
+			Right click on project >> Properties >> Linker >> Additional Library Directories >> Edit
+			>> click add folder icon >> browse to the "lib" folder 
+			>> edit the path so that it's relative, ".\lib" >> click "Apply" and "Ok"
+
+		16) Add the lib dependencies
+			
+			Right click on project >> Properties >> Linker/Input >> Additional Dependencies >> Edit
+			>> manually type in the names of your lib/*.lib files:
+
+				glew32.lib
+				glew32s.lib
+				SDL2.lib
+				SDL2main.lib
+				SDL2test.lib
+				OpenGL32.lib
+
+			Notice the "secret" library called "OpenGL32.lib". You can use it here since Windows makes it
+			available by default... implicitly.
+
+			click "Apply" and "OK"
+
+		17) Hit F7 to build. If you get a build succeeded, then you are golden. Well done!
