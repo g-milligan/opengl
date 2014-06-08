@@ -92,12 +92,12 @@ OpenGL Getting Started (Windows):
 			Right click on project >> Properties >> Linker/Input >> Additional Dependencies >> Edit
 			>> manually type in the names of your lib/*.lib files:
 
-				glew32.lib
-				glew32s.lib
-				SDL2.lib
-				SDL2main.lib
-				SDL2test.lib
-				OpenGL32.lib
+glew32.lib
+glew32s.lib
+SDL2.lib
+SDL2main.lib
+SDL2test.lib
+OpenGL32.lib
 
 			Notice the "secret" library called "OpenGL32.lib". You can use it here since Windows makes it
 			available by default... implicitly.
@@ -105,3 +105,10 @@ OpenGL Getting Started (Windows):
 			click "Apply" and "OK"
 
 		17) Hit F7 to build. If you get a build succeeded, then you are golden. Well done!
+
+		Note: If you are using a 64 bit operating system instead of 32 bit, once you start working with SDL libraries, you'll have to configure for 64 bit:
+
+"I'm on a x64 bit system, which resulted in an error when trying to run this blue window demo. I'm no guru yet, but I managed to google my way to a fix... if someone else is using a 64 bit system, maybe this will help:
+Solution: Had to change to a x64 bit configuration as suggested in a "Zemax" article titled "Compiling a 64-bit Application in Microsoft Visual Studio Express 2010"
+This fixed the problem, but it also created a warning. To get rid of the warning, I switched to a different Runtime Library, as suggested in a stackoverflow post titled "Resolving LNK4098: defaultlib 'MSVCRT' conflicts with"
+Finally, because I like to stay organized, I deleted the old Debug folder in my project. With this configuration, the Debug folder is generated under /x64/Debug instead of just /Debug"

@@ -1,0 +1,8 @@
+#Build Stuff that gets generated in Debug
+/tutorials/**/Debug/*.obj
+/tutorials/**/Debug/*.tlog
+/tutorials/**/Debug/*.log
+/tutorials/**/Debug/*.ilk
+/tutorials/**/Debug/*.lastbuildstate
+/tutorials/**/Debug/*.pdb
+/tutorials/**/Debug/*.idb
