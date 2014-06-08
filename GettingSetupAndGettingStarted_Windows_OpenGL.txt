@@ -1,5 +1,10 @@
 OpenGL Getting Started (Windows):
 
+	GRAPHICS CARD
+
+		Make sure to update your graphics driver to the latest version. 
+		OpenGL leverages the power of your graphics card, so making sure it's up-to-date is the tops. Mmkay.
+
 	DOWNLOADS (Windows)
 	https://www.youtube.com/watch?v=DxNlRMboBuI&list=PLEETnX-uPtBXT9T-hD0Bj31DSnwio-ywh&index=3
 
