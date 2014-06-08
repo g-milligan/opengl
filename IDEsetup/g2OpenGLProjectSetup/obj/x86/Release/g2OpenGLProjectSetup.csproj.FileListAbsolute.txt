@@ -1,0 +1,8 @@
+C:\Users\gmilligan\AppData\Local\Temporary Projects\g2OpenGLProjectSetup\bin\Release\g2OpenGLProjectSetup.exe
+C:\Users\gmilligan\AppData\Local\Temporary Projects\g2OpenGLProjectSetup\bin\Release\g2OpenGLProjectSetup.pdb
+C:\Users\gmilligan\AppData\Local\Temporary Projects\g2OpenGLProjectSetup\obj\x86\Release\g2OpenGLProjectSetup.exe
+C:\Users\gmilligan\AppData\Local\Temporary Projects\g2OpenGLProjectSetup\obj\x86\Release\g2OpenGLProjectSetup.pdb
+C:\Users\gmilligan\documents\visual studio 2010\Projects\g2OpenGLProjectSetup\obj\x86\Release\g2OpenGLProjectSetup.exe
+C:\Users\gmilligan\documents\visual studio 2010\Projects\g2OpenGLProjectSetup\obj\x86\Release\g2OpenGLProjectSetup.pdb
+C:\Users\gmilligan\documents\visual studio 2010\Projects\g2OpenGLProjectSetup\bin\Release\g2OpenGLProjectSetup.exe
+C:\Users\gmilligan\documents\visual studio 2010\Projects\g2OpenGLProjectSetup\bin\Release\g2OpenGLProjectSetup.pdb

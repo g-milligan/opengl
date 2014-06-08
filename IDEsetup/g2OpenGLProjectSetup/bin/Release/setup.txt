@@ -1,0 +1,17 @@
+	1) change to x64 instead of Win32 in the configuration manager dropdown (to the right of "Debug" dropdown).
+
+	Double click setup.exe to automatically...
+		2) copy over the "include" and "lib" folders to the project's root directory
+		3) create folder /x64/Debug/. and move the .dll files into this folder
+			Should be around... Folders: (12) || Files (327)
+
+	4) try F7 to build. If successful, you can delete this setup file and setup.exe
+
+
+
+
+
+
+
+VS 2012 Template Path:
+C:\Users\gmilligan\Documents\Visual Studio 2012\My Exported Templates\OpenGL_BasicBlueScreen.zip
