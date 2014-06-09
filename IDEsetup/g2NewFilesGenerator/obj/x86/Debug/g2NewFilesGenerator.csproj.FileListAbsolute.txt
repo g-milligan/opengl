@@ -1,0 +1,4 @@
+C:\Users\gmilligan\AppData\Local\Temporary Projects\g2NewFilesGenerator\bin\Debug\g2NewFilesGenerator.exe
+C:\Users\gmilligan\AppData\Local\Temporary Projects\g2NewFilesGenerator\bin\Debug\g2NewFilesGenerator.pdb
+C:\Users\gmilligan\AppData\Local\Temporary Projects\g2NewFilesGenerator\obj\x86\Debug\g2NewFilesGenerator.exe
+C:\Users\gmilligan\AppData\Local\Temporary Projects\g2NewFilesGenerator\obj\x86\Debug\g2NewFilesGenerator.pdb

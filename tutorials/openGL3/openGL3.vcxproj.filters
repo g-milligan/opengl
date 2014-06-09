@@ -13,9 +13,15 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="display.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shader.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -24,5 +30,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="setup.exe" />
+    <None Include="newfile.exe" />
   </ItemGroup>
 </Project>
