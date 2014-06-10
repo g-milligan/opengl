@@ -2,3 +2,7 @@ C:\Users\gmilligan\AppData\Local\Temporary Projects\g2NewFilesGenerator\bin\Debu
 C:\Users\gmilligan\AppData\Local\Temporary Projects\g2NewFilesGenerator\bin\Debug\g2NewFilesGenerator.pdb
 C:\Users\gmilligan\AppData\Local\Temporary Projects\g2NewFilesGenerator\obj\x86\Debug\g2NewFilesGenerator.exe
 C:\Users\gmilligan\AppData\Local\Temporary Projects\g2NewFilesGenerator\obj\x86\Debug\g2NewFilesGenerator.pdb
+C:\OpenGL\IDEsetup\g2NewFilesGenerator\obj\x86\Debug\g2NewFilesGenerator.exe
+C:\OpenGL\IDEsetup\g2NewFilesGenerator\obj\x86\Debug\g2NewFilesGenerator.pdb
+C:\OpenGL\IDEsetup\g2NewFilesGenerator\bin\Debug\g2NewFilesGenerator.exe
+C:\OpenGL\IDEsetup\g2NewFilesGenerator\bin\Debug\g2NewFilesGenerator.pdb

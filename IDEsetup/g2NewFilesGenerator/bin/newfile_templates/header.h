@@ -1,4 +1,4 @@
-<<filename:lowercase:filename>>
+<<filename:lowercase:/test/demo/:filename>>
 #ifndef <<var:uppercase:filename>>_H
 #define <<var:uppercase:filename>>_H
 

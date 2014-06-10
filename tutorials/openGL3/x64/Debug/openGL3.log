@@ -1,16 +1,16 @@
-﻿Build started 6/8/2014 1:32:33 PM.
-     1>Project "C:\OpenGL\tutorials\openGL3\openGL3.vcxproj" on node 2 (Rebuild target(s)).
+﻿Build started 6/8/2014 11:43:02 PM.
+     1>Project "C:\OpenGL\tutorials\openGL3\openGL3.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\CL.exe /c /I.\include /Zi /nologo /W3 /WX- /Od /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc110.pdb" /Gd /TP /errorReport:prompt display.cpp main.cpp
-         main.cpp
-         display.cpp
-         Generating Code...
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\CL.exe /c /I.\include /Zi /nologo /W3 /WX- /Od /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc110.pdb" /Gd /TP /errorReport:prompt shader.cpp
+         shader.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\OpenGL\tutorials\openGL3\x64\Debug\openGL3.exe" /INCREMENTAL /NOLOGO /LIBPATH:.\lib glew32.lib glew32s.lib SDL2.lib SDL2main.lib SDL2test.lib OpenGL32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\OpenGL\tutorials\openGL3\x64\Debug\openGL3.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\OpenGL\tutorials\openGL3\x64\Debug\openGL3.lib" /MACHINE:X64 x64\Debug\display.obj
          x64\Debug\main.obj
-         openGL3.vcxproj -> C:\OpenGL\tutorials\openGL3\x64\Debug\openGL3.exe
-     1>Done Building Project "C:\OpenGL\tutorials\openGL3\openGL3.vcxproj" (Rebuild target(s)).
+         x64\Debug\shader.obj
+     1>shader.obj : error LNK2019: unresolved external symbol __imp__CrtDbgReportW referenced in function "public: char const & __cdecl std::_String_const_iterator<class std::_String_val<struct std::_Simple_types<char> > >::operator*(void)const " (??D?$_String_const_iterator@V?$_String_val@U?$_Simple_types@D@std@@@std@@@std@@QEBAAEBDXZ)
+     1>C:\OpenGL\tutorials\openGL3\x64\Debug\openGL3.exe : fatal error LNK1120: 1 unresolved externals
+     1>Done Building Project "C:\OpenGL\tutorials\openGL3\openGL3.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:03.96
+Time Elapsed 00:00:02.71

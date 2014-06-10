@@ -31,5 +31,7 @@
   <ItemGroup>
     <None Include="setup.exe" />
     <None Include="newfile.exe" />
+    <None Include="res\basicShader.fs" />
+    <None Include="res\basicShader.vs" />
   </ItemGroup>
 </Project>

@@ -156,6 +156,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="newfile.exe" />
+    <None Include="res\basicShader.fs" />
+    <None Include="res\basicShader.vs" />
     <None Include="setup.exe" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

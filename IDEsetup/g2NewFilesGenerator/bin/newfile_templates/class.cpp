@@ -1,4 +1,4 @@
-<<filename:lowercase:filename>>
+<<filename:lowercase:test:.>>
 #include "<<var:lowercase:filename>>.h"
 #include <iostream>
 

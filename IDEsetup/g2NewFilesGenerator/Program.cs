@@ -111,11 +111,15 @@ namespace g2NewFilesGenerator
                                         atLeastOneToken = true;
                                     }
                                 }
+                                //Dictionary<[filePath], [changedFileName]>
+                                Dictionary<string, string> changedFileNames = new Dictionary<string,string>();
+                                //Dictionary<[filePath], [changedFileDir]>
+                                Dictionary<string, string> changedFileDirs = new Dictionary<string, string>(); 
                                 //if there are any tokens in any of the template files
-                                string changedFileName = "";
                                 if (atLeastOneToken)
                                 {
-                                    Console.WriteLine("  CONFIGURE TEMPLATE VARIABLES: \n");
+                                    string configVarsMsg = "";
+                                    configVarsMsg += "  CONFIGURE TEMPLATE VARIABLES: \n\n";
                                     //List<[tokenName]>
                                     List<string> uniqueTokenNames = new List<string>();
                                     //for each file 
@@ -130,111 +134,151 @@ namespace g2NewFilesGenerator
                                             {
                                                 fileName = fileName.Substring(fileName.LastIndexOf("\\") + 1);
                                             }
-                                            Console.WriteLine("  "+fileName);
+                                            configVarsMsg += "  "+fileName + "\n";
                                             //for each token that needs to be configured
                                             for (int t = 0; t < pathTokensPair.Value.Count; t++ )
                                             {
                                                 //show the tokens that need to be configured
                                                 string tokenStr = pathTokensPair.Value[t];
-                                                Console.WriteLine(" \t" + tokenStr);
+                                                configVarsMsg += " \t" + tokenStr + "\n";
                                                 //get just the unique token name (last item in the : separated list)
-                                                string uniqueTokenName = getTokenName(tokenStr);
-                                                if (!uniqueTokenNames.Contains(uniqueTokenName))
+                                                string uniqueTokenName = getTokenPart("name", tokenStr);
+                                                //if this is not a blank token
+                                                if (uniqueTokenName != ".")
                                                 {
-                                                    //add the unique token name, if not already in the list
-                                                    uniqueTokenNames.Add(uniqueTokenName);
+                                                    if (!uniqueTokenNames.Contains(uniqueTokenName))
+                                                    {
+                                                        //add the unique token name, if not already in the list
+                                                        uniqueTokenNames.Add(uniqueTokenName);
+                                                    }
                                                 }
                                             }
                                         }
                                     }
-                                    if (uniqueTokenNames.Count == 1)
+                                    //if there are any NON blank token names (that were represented by a dot, .)
+                                    if (uniqueTokenNames.Count > 0)
                                     {
-                                        Console.Write("\n  Just " + uniqueTokenNames.Count + " unique token --> ");
-                                    }
-                                    else
-                                    {
-                                        Console.Write("\n  " + uniqueTokenNames.Count + " unique tokens --> ");
-                                    }
-                                    //list the unique variable names
-                                    for (int u = 0; u < uniqueTokenNames.Count; u++)
-                                    {
-                                        Console.Write(uniqueTokenNames[u]);
-                                        if (u + 1 != uniqueTokenNames.Count)
+                                        //show the configure variables message
+                                        Console.WriteLine(configVarsMsg);
+                                        //if there is only one token
+                                        if (uniqueTokenNames.Count == 1)
                                         {
-                                            Console.Write(", ");
+                                            Console.Write("\n  Just " + uniqueTokenNames.Count + " unique token --> ");
                                         }
                                         else
                                         {
-                                            Console.WriteLine("\n");
+                                            Console.Write("\n  " + uniqueTokenNames.Count + " unique tokens --> ");
                                         }
-                                    }
-                                    Console.WriteLine("  -------------------------------------------------------\n");
-                                    //for each token require input
-                                    Dictionary<string, string> tokenInputLookup = new Dictionary<string, string>();
-                                    for (int i = 0; i < uniqueTokenNames.Count; i++)
-                                    {
-                                        //get the value for this token from the user
-                                        Console.Write("  Enter --> " + uniqueTokenNames[i] + ": ");
-                                        string line = Console.ReadLine(); line = line.Trim();
-                                        tokenInputLookup.Add(uniqueTokenNames[i], line);
-                                    }
-
-                                    Console.WriteLine("\n  OK, got it. Hit any key to build..."); Console.ReadKey();
-
-                                    //for each template file
-                                    foreach (KeyValuePair<string, List<string>> pathPair in pathTokensLookup)
-                                    {
-                                        string filePath = pathPair.Key;
-                                        string fileContent = pathOriginalContentLookup[filePath];
-                                        //Dictionary<[tokenKey], [tokenInputValue]>
-                                        List<string> tokens = pathPair.Value;
-                                        //for each token in the file
-                                        for(int t = 0; t < tokens.Count; t++)
+                                        //list the unique variable names
+                                        for (int u = 0; u < uniqueTokenNames.Count; u++)
                                         {
-                                            string tokenKey = tokens[t];
-                                            string tokenName = getTokenName(tokenKey);
-                                            //get the token value and format the value
-                                            string tokenValue = tokenInputLookup[tokenName];
-                                            string[] tokenParts = tokenKey.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
-                                            string type = tokenParts[0]; type = type.Trim(); type = type.ToLower();
-                                            if (type.IndexOf("<<") == 0) { type = type.Substring("<<".Length); }
-                                            string casing = tokenParts[1]; casing = casing.Trim(); casing = casing.ToLower();
-                                            switch (casing)
+                                            Console.Write("\"" + uniqueTokenNames[u] + "\"");
+                                            if (u + 1 != uniqueTokenNames.Count)
                                             {
-                                                case "uppercase":
-                                                    tokenValue = tokenValue.ToUpper();
-                                                    break;
-                                                case "lowercase":
-                                                    tokenValue = tokenValue.ToLower();
-                                                    break;
-                                                case "capitalize":
-                                                    tokenValue = tokenValue.ToLower();
-                                                    string firstChar = tokenValue.Substring(0,1);
-                                                    string theRest = tokenValue.Substring(1);
-                                                    firstChar = firstChar.ToUpper();
-                                                    tokenValue = firstChar + theRest;
-                                                    break;
-                                                default:
-                                                    break;
+                                                Console.Write(", ");
                                             }
-                                            //if this is a special token name
-                                            switch (type)
+                                            else
                                             {
-                                                case "var":
-                                                    //replace the tokens with the actual values
-                                                    fileContent = fileContent.Replace(tokenKey, tokenValue);
-                                                    break;
-                                                case "filename":
-                                                    //set the name of the file to this token's value
-                                                    changedFileName = tokenValue;
-                                                    //remove these tokens
-                                                    fileContent = fileContent.Replace(tokenKey, "");
-                                                    break;
-                                                default:
-                                                    break;
+                                                Console.WriteLine("\n");
                                             }
-                                            //set the token value
-                                            pathOriginalContentLookup[filePath] = fileContent;
+                                        }
+                                        Console.WriteLine("  -------------------------------------------------------\n");
+                                        //for each token require input
+                                        Dictionary<string, string> tokenInputLookup = new Dictionary<string, string>();
+                                        for (int i = 0; i < uniqueTokenNames.Count; i++)
+                                        {
+                                            //get the value for this token from the user
+                                            Console.Write("  Enter --> " + uniqueTokenNames[i] + ": ");
+                                            string line = Console.ReadLine(); line = line.Trim();
+                                            tokenInputLookup.Add(uniqueTokenNames[i], line);
+                                        }
+
+                                        Console.WriteLine("\n  OK, got it. Hit any key to build..."); Console.ReadKey();
+
+                                        //for each template file
+                                        foreach (KeyValuePair<string, List<string>> pathPair in pathTokensLookup)
+                                        {
+                                            string filePath = pathPair.Key;
+                                            string fileContent = pathOriginalContentLookup[filePath];
+                                            //Dictionary<[tokenKey], [tokenInputValue]>
+                                            List<string> tokens = pathPair.Value;
+                                            //for each token in the file
+                                            for (int t = 0; t < tokens.Count; t++)
+                                            {
+                                                //get the token key, eg: <<type:casing:name>>
+                                                string tokenKey = tokens[t];
+                                                //split the token key parts up
+                                                string[] tokenParts = tokenKey.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+                                                //get the token name
+                                                string tokenName = getTokenPart("name", tokenParts);
+                                                //get the token type
+                                                string type = getTokenPart("type", tokenParts);
+                                                //get the token casing
+                                                string casing = getTokenPart("casing", tokenParts);
+                                                //if not a blank tokenName, represented by a dot, .
+                                                string tokenValue = "";
+                                                if (tokenName != ".")
+                                                {
+                                                    //get the token value... the value is formatted based on the different token parts, eg: casing
+                                                    tokenValue = tokenInputLookup[tokenName];
+                                                    switch (casing)
+                                                    {
+                                                        case "uppercase":
+                                                            tokenValue = tokenValue.ToUpper();
+                                                            break;
+                                                        case "lowercase":
+                                                            tokenValue = tokenValue.ToLower();
+                                                            break;
+                                                        case "capitalize":
+                                                            tokenValue = tokenValue.ToLower();
+                                                            string firstChar = tokenValue.Substring(0, 1);
+                                                            string theRest = tokenValue.Substring(1);
+                                                            firstChar = firstChar.ToUpper();
+                                                            tokenValue = firstChar + theRest;
+                                                            break;
+                                                        default:
+                                                            break;
+                                                    }
+                                                }
+                                                //if this is a special token name
+                                                switch (type)
+                                                {
+                                                    case "var":
+                                                        //replace the tokens with the actual values
+                                                        fileContent = fileContent.Replace(tokenKey, tokenValue);
+                                                        break;
+                                                    case "filename":
+                                                        //remove these tokens from the file content
+                                                        fileContent = fileContent.Replace(tokenKey, "");
+                                                        //if this file doesn't already have a designated changed name
+                                                        if (!changedFileNames.ContainsKey(filePath))
+                                                        {
+                                                            //if there is a specified file name (other than the existing template file's name)
+                                                            if (tokenValue != "" && tokenValue != ".")
+                                                            {
+                                                                //set the new name of the file
+                                                                changedFileNames.Add(filePath, tokenValue);
+                                                            }
+                                                        }
+                                                        //since this token specifies a filename, it may also specify the root directory for the file (if not, changedFileDir = "")...
+                                                        //if this file doesn't already have a designated changed sub directory
+                                                        if (!changedFileDirs.ContainsKey(filePath))
+                                                        {
+                                                            //if there is a specified directory in the tokenParts
+                                                            string changedDir = getTokenPart("dir", tokenParts);
+                                                            if (changedDir != "" && changedDir != ".")
+                                                            {
+                                                                //set the new sub directory of the file
+                                                                changedFileDirs.Add(filePath, changedDir);
+                                                            }
+                                                        }
+                                                        break;
+                                                    default:
+                                                        break;
+                                                }
+                                                //set the token value
+                                                pathOriginalContentLookup[filePath] = fileContent;
+                                            }
                                         }
                                     }
                                 }
@@ -246,7 +290,7 @@ namespace g2NewFilesGenerator
                                     string filePath = pathContentPair.Key;
                                     string fileName = "";
                                     //if changing the file name
-                                    if (changedFileName != "")
+                                    if (changedFileNames.ContainsKey(filePath))
                                     {
                                         //get just the file extension
                                         string fileExt = "";
@@ -254,9 +298,9 @@ namespace g2NewFilesGenerator
                                         {
                                             fileExt = filePath.Substring(filePath.LastIndexOf("."));
                                         }
-                                        fileName = changedFileName + fileExt;
+                                        fileName = changedFileNames[filePath] + fileExt;
                                     }
-                                    else
+                                    else //use same filename as the original template file
                                     {
                                         fileName = filePath;
                                         if (fileName.IndexOf("\\") != -1)
@@ -265,8 +309,30 @@ namespace g2NewFilesGenerator
                                             fileName = fileName.Substring(fileName.LastIndexOf("\\") + 1);
                                         }
                                     }
+                                    //if changing the file directory (under the current project directory)
+                                    string changedFileDir = "";
+                                    if (changedFileDirs.ContainsKey(filePath))
+                                    {
+                                        changedFileDir = changedFileDirs[filePath];
+                                        //make sure each directory exists... create them if they don't
+                                        string[] dirs = changedFileDir.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
+                                        string currentDir = upOneDirPath + "\\" + projFolder + "\\";
+                                        for (int d = 0; d < dirs.Length; d++)
+                                        {
+                                            //if this directory doesn't exist
+                                            currentDir += dirs[d] + "\\";
+                                            if (!Directory.Exists(currentDir))
+                                            {
+                                                //create the directory
+                                                Directory.CreateDirectory(currentDir);
+                                            }
+                                        }
+                                        //append the final \\ at the end of the directory path
+                                        changedFileDir += "\\";
+                                    }
+                                    //get the new file content
                                     string fileContent = pathContentPair.Value;
-                                    string newFilePath = upOneDirPath + "\\" + projFolder + "\\" + fileName;
+                                    string newFilePath = upOneDirPath + "\\" + projFolder + "\\" + changedFileDir + fileName;
                                     //if the new file doesn't already exist
                                     if (!File.Exists(newFilePath))
                                     {
@@ -276,18 +342,18 @@ namespace g2NewFilesGenerator
                                         {
                                             //create the file with its content (maybe changed or maybe not changed and just copied over)
                                             System.IO.File.WriteAllText(newFilePath, fileContent);
-                                            Console.WriteLine("  FILE CREATED: \t" + projFolder + "\\" + fileName);
+                                            Console.WriteLine("  FILE CREATED: \t" + projFolder + "\\" + changedFileDir + fileName);
                                             fileCount++;
                                         }
                                         else
                                         {
-                                            Console.WriteLine("  FILE SKIP (BLANK): \t" + projFolder + "\\" + fileName);
+                                            Console.WriteLine("  FILE SKIP (BLANK): \t" + projFolder + "\\" + changedFileDir + fileName);
                                             skippedFileCount++;
                                         }
                                     }
                                     else
                                     {
-                                        Console.WriteLine("  FILE SKIP (ALREADY EXISTS): \t" + projFolder + "\\" + fileName);
+                                        Console.WriteLine("  FILE SKIP (ALREADY EXISTS): \t" + projFolder + "\\" + changedFileDir + fileName);
                                         skippedFileCount++;
                                     }
                                 }
@@ -320,13 +386,92 @@ namespace g2NewFilesGenerator
             Console.ReadKey();
         }
 
-        private static string getTokenName(string tokenStr)
+        private static string getTokenPart(string partKey, string tokenStr)
         {
+            //get the token parts, eg: <<type:casing:name>>
             string[] tokenParts = tokenStr.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
-            string uniqueTokenName = tokenParts[tokenParts.Length - 1];
-            uniqueTokenName = uniqueTokenName.Trim(); uniqueTokenName = uniqueTokenName.ToLower();
-            uniqueTokenName = uniqueTokenName.Substring(0, uniqueTokenName.LastIndexOf(">>"));
-            return uniqueTokenName;
+            return getTokenPart(partKey, tokenParts);
+        }
+        private static string getTokenPart(string partKey, string[] tokenParts)
+        {
+            string returnStr = "";
+            //return a different part depending on the given part key
+            switch(partKey)
+            {
+                case "type":
+                    //type is always first part
+                    string type = tokenParts[0];
+                    //if token name contains >>
+                    if (type.Contains("<<"))
+                    {
+                        //remove starting <<
+                        type = type.Substring(">>".Length);
+                    }
+                    //always trim and lowercase token type
+                    type = type.Trim(); type = type.ToLower();
+                    returnStr = type;
+                    break;
+                case "casing":
+                    //token casing is always second part
+                    string casing = tokenParts[1];
+                    //always trim and lowercase token casing
+                    casing = casing.Trim(); casing = casing.ToLower();
+                    returnStr = casing;
+                    break;
+                case "dir":
+                    //if there are more than 3 token parts
+                    if (tokenParts.Length > 3)
+                    {
+                        //recursively get type
+                        string tokenType = getTokenPart("type", tokenParts);
+                        //if this type is a "filename"
+                        if (tokenType == "filename")
+                        {
+                            //token directory is always second-to-last part, eg: <<filename:lowercase:folder/path:filename>>
+                            string dir = tokenParts[tokenParts.Length - 2];
+                            //always trim token dir
+                            dir = dir.Trim();
+                            returnStr = dir;
+                            //normalize the directory separators
+                            returnStr = returnStr.Replace("\\", "/");
+                            returnStr = returnStr.Replace("///", "/");
+                            returnStr = returnStr.Replace("//", "/");
+                            returnStr = returnStr.Replace("/", "\\");
+                            //if this dir path contains a separtor
+                            if (returnStr.Contains("\\"))
+                            {
+                                //cannot end with \\
+                                if (returnStr.LastIndexOf("\\") == returnStr.Length - 1)
+                                {
+                                    //trim off ending \\
+                                    returnStr = returnStr.Substring(0, returnStr.Length - 1);
+                                }
+                                //cannot start with \\
+                                if (returnStr.IndexOf("\\") == 0)
+                                {
+                                    //trim off starting \\
+                                    returnStr = returnStr.Substring(1);
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "name":
+                    //token name is always last part
+                    string uniqueTokenName = tokenParts[tokenParts.Length - 1];
+                    //if token name contains >>
+                    if (uniqueTokenName.Contains(">>"))
+                    {
+                        //remove trailing >>
+                        uniqueTokenName = uniqueTokenName.Substring(0, uniqueTokenName.LastIndexOf(">>"));
+                    }
+                    //always trim and lowercase token name
+                    uniqueTokenName = uniqueTokenName.Trim(); uniqueTokenName = uniqueTokenName.ToLower();
+                    returnStr = uniqueTokenName;
+                    break;
+
+            }
+            return returnStr;
         }
 
         private static void showTemplateOption(int index, string newfile_templates, List<string> templateOptions, ref List<string> templateOutputOptions)
